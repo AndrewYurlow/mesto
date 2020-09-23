@@ -1,0 +1,9 @@
+.profile__name{
+  color: rgb(255, 255, 255);
+  margin: 0;
+  grid-column: 1/2;
+  grid-row: 1/2;
+  font-size: 42px;
+  line-height: 56px;
+  font-weight: 500;
+}
