@@ -3,3 +3,9 @@
   height: 50px;
   background-image: url(../../image/add-button.svg);
 }
+@media screen and (max-width: 768px){
+  .add-button{
+    width: 282px;
+    background-image: url(../../image/add-button-mobile.svg);
+  }
+}

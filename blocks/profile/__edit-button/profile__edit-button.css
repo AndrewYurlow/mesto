@@ -5,4 +5,12 @@
   grid-column: 2/3;
   grid-row: 1/2;
   align-self: center;
+  margin-top: 10px;
+}
+@media screen and (max-width: 768px){
+  .profile__edit-button{
+    background-image: url(../../../image/edit-button-mobile.svg);
+    width: 18px;
+    height: 18px;
+  }
 }

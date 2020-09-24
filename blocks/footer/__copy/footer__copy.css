@@ -5,3 +5,9 @@
   line-height: 22px;
   color: rgb(84, 84, 84)
 }
+@media screen and (max-width: 768px){
+  .footer__copy{
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
