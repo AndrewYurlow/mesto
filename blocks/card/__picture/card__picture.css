@@ -1,0 +1,7 @@
+.card__picture{
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+}

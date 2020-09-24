@@ -1,4 +1,7 @@
 .card__like-button{
+  border: none;
+  background-color: rgb(255, 255, 255);
+  outline: none;
   width: 21px;
   height: 18px;
   align-self: center;
