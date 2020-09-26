@@ -4,7 +4,7 @@
   list-style: none;
   display: grid;
   grid-template-columns: repeat(auto-fit, 282px);
-  grid-auto-rows: auto;
+  grid-template-rows: repeat(auto-fit, 361px);
   gap: 20px 18px;
   justify-content: center;
 }
