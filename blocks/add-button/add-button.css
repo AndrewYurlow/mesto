@@ -1,7 +1,14 @@
 .add-button{
+  border: 0;
+  outline: none;
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
   width: 150px;
   height: 50px;
   background-image: url(../../image/add-button.svg);
+}
+.add-button:hover{
+  opacity: 0.6;
 }
 @media screen and (max-width: 768px){
   .add-button{
