@@ -13,20 +13,18 @@ function openPopup() {
   inputDescription.value = profileDecription.textContent;
 }
 function closePopup() {
-  inputName.value = '';
-  inputDescription.value = '';
   popup.classList.remove('popup_opened');
 }
 function saveProfileSettings(event) {
   event.preventDefault();
   profileName.textContent = inputName.value;
   profileDecription.textContent = inputDescription.value;
-  popup.classList.remove('popup_opened');
+  closePopup();
 }
 
 editButton.addEventListener('click', openPopup);
 closeButton.addEventListener('click', closePopup);
-popupSaveButton.addEventListener('click', saveProfileSettings);
+popupSaveButton.addEventListener('submit', saveProfileSettings);
 
 
 
