@@ -25,6 +25,11 @@ function saveProfileSettings(event) {
 editButton.addEventListener('click', openPopup);
 closeButton.addEventListener('click', closePopup);
 form.addEventListener('submit', saveProfileSettings);
+popup.addEventListener('click', function(event){
+  if(event.target === event.currentTarget){
+    closePopup();
+  }
+});
 
 
 
