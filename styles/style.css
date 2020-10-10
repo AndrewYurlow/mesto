@@ -23,8 +23,12 @@
 @import url(../blocks/profile/__add-button/profile__add-button.css);
 
 @import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/_type/popup_type_edit-form.css);
+@import url(../blocks/popup/_type/popup_type_add-card.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
 @import url(../blocks/popup/__close-button/popup__close-button.css);
+@import url(../blocks/popup/__close-button/_type/popup__close-button_type_edit-form.css);
+@import url(../blocks/popup/__close-button/_type/popup__close-button_type_add-card.css);
 @import url(../blocks/popup/__container/popup__container.css);
 @import url(../blocks/popup/__container/_type/popup___container_type_edit-form.css);
 @import url(../blocks/popup/__container/_type/popup__container_type_add-card.css);
