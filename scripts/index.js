@@ -44,6 +44,11 @@ const prepareCard = (item) => {
   const card = cardTemplate.cloneNode(true);
   card.querySelector('.card__image').src = item.link;
   card.querySelector('.card__title').textContent = item.name;
+  const likeButton = card.querySelector('.card__like-button');
+  likeButton.addEventListener('click', event => {
+    event.preventDefault();
+    likeButton.classList.toggle('card__like-button_liked');
+  });
   return card;
 }
 const showCards = (array) => {
