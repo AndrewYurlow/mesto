@@ -49,6 +49,14 @@ const prepareCard = (item) => {
     event.preventDefault();
     likeButton.classList.toggle('card__like-button_liked');
   });
+  const deleteButton = card.querySelector('.card__delete');
+  deleteButton.addEventListener('click', event => {
+    event.preventDefault();
+    deleteButton.closest('.cards__item').remove();
+    const cardIndex = initialCards.indexOf(item);
+    initialCards.splice(cardIndex, 1);
+    console.log(initialCards);
+  });
   return card;
 }
 const showCards = (array) => {
