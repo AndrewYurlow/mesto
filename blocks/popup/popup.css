@@ -1,5 +1,6 @@
 .popup{
   display: none;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -9,10 +10,4 @@
   width: 100%;
   min-height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
-}
-@media screen and (max-width: 768px){
-  .popup{
-    flex-direction: column;
-    flex-flow: column-reverse;
-  }
 }
