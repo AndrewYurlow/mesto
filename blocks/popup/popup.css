@@ -1,8 +1,9 @@
 .popup{
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(3, min-content);
+  grid-template-rows: repeat(2, min-content);
   justify-content: center;
-  align-items: center;
+  align-content: center;
   position: fixed;
   top: 0;
   left: 0;
