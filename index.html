@@ -31,10 +31,12 @@
     </footer>
     <section class="popup popup_type_edit-form">
       <button class="popup__close-button popup__close-button_type_edit-form" type="button"></button>
-      <form action="./index.html" method="POST" class="popup__container popup__container_type_edit-form" name="edit-profile">
+      <form action="./index.html" method="POST" class="popup__container popup__container_type_edit-form" name="edit-profile" novalidate>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <input type="text" id="name" name="user-name" placeholder="Как вас зовут?" class="popup__input popup__input_type_name" value=''>
-        <input type="text" id="description" name="user-description" placeholder="Чем занимаетесь?" class="popup__input popup__input_type_description" value=''>
+        <input type="text" id="name" name="user-name" placeholder="Как вас зовут?" class="popup__input popup__input_type_name" minlength=2 maxlength=40 required>
+        <span class='popup__input-error popup__input-error_type_name' id="name-error"></span>
+        <input type="text" id="description" name="user-description" placeholder="Чем занимаетесь?" class="popup__input popup__input_type_description" minlength=2 maxlength=200 required>
+        <span class='popup__input-error popup__input-error_type_description' id="description-error"></span>
         <button class="popup__save-button" type="submit">Сохранить</button>
       </form>
     </section>
