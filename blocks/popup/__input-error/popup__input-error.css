@@ -1,8 +1,7 @@
 .popup__input-error{
-  display: none;
   width: 360px;
   font-size: 12px;
   line-height: 15px;
   color: rgba(255, 0, 0, 1);
-  margin-bottom: 10px;
+  min-height: 35px;
 }

@@ -1,3 +1,4 @@
+const popupList = Array.from(document.querySelectorAll('.popup')); 
 const popupEditForm = document.querySelector('.popup_type_edit-form');
 const popupAddCard = document.querySelector('.popup_type_add-card');
 const popupViewImage = document.querySelector('.popup_type_view-image');
@@ -18,50 +19,8 @@ const inputPlaceTitle = document.querySelector('.popup__input_type_place-title')
 const inputPlaceLink = document.querySelector('.popup__input_type_place-link');
 const cardTemplate = document.querySelector('.card-template').content;
 const cards = document.querySelector('.cards');
-
-const hasInvalidInput = (input) => {
-  if(!input.validity.valid){
-    return true;
-  }else{
-    return false;
-  }
-}
-const disableSubmitButton = (submit) =>{
-  submit.setAttribute('disabled', true);
-  submit.classList.add('popup__save-button_disabled');
-}
-const turnOnSubmitButton = (submit) =>{
-  submit.removeAttribute('disabled');
-  submit.classList.remove('popup__save-button_disabled');
-}
-const showErrorMessage = (error, errorInput) => {
-  error.classList.add('popup__input-error_active');
-  error.textContent = errorInput.validationMessage;
-}
-const clearErrorMessage = (error) => {
-  error.classList.remove('popup__input-error_active');
-  error.textContent = '';
-}
-const checkFormInputs = form => {
-  const inputList = Array.from(form.querySelectorAll('.popup__input'));
-  const submitButton = form.querySelector('.popup__save-button');
-  inputList.forEach(inputElement => {
-    const errorMessage = form.querySelector(`#${inputElement.id}-error`);
-    inputElement.addEventListener('input', () => {
-      if(hasInvalidInput(inputElement)){
-        showErrorMessage(errorMessage, inputElement);
-        disableSubmitButton(submitButton);
-      }else{
-        clearErrorMessage(errorMessage);
-        turnOnSubmitButton(submitButton);
-      }
-    });
-  });
-}
-const validateForm = (popup) => {
-  const form = popup.querySelector('.popup__container');
-  checkFormInputs(form);
-}
+const submitEditForm = popupEditForm.querySelector('.popup__save-button');
+const submitAddCard = popupAddCard.querySelector('.popup__save-button');
 
 const addDeleteCardEvent = (deleteButton) => {
   deleteButton.addEventListener('click', event => {
@@ -105,16 +64,12 @@ const displayCards = (array, container) => {
 }
 const openPopup = (popup) => {
   popup.classList.add('popup_opened');
-  validateForm(popup);
 }
 const closePopup = (popup) => {
-  popup.classList.remove('popup_opened');
-  const errorList = popup.querySelectorAll('.popup__input-error');
-  const submitButton = popup.querySelector('.popup__save-button');
-  errorList.forEach(err => {
-    clearErrorMessage(err);
+  Array.from(popup.querySelectorAll('.popup__input')).forEach(input =>{
+    hideError(input, formSelectors.inputErrorClass);
   });
-  turnOnSubmitButton(submitButton);
+  popup.classList.remove('popup_opened');
 }
 const saveProfileSettings = (event) => {
   event.preventDefault();
@@ -134,9 +89,13 @@ const addUserCard = (event) => {
 editButton.addEventListener('click', () => {
   inputName.value = profileName.textContent;
   inputDescription.value = profileDecription.textContent;
+  toggleButton(submitEditForm, formSelectors.inactiveButtonClass, formEditProfile);
   openPopup(popupEditForm);
 });
 addButton.addEventListener('click', () => {
+  inputPlaceTitle.value = '';
+  inputPlaceLink.value = '';
+  toggleButton(submitAddCard, formSelectors.inactiveButtonClass, formAddCard);
   openPopup(popupAddCard);
 });
 closeEditFormButton.addEventListener('click', () => {
@@ -150,7 +109,20 @@ closeViewImageButton.addEventListener('click', () => {
 })
 formEditProfile.addEventListener('submit', saveProfileSettings);
 formAddCard.addEventListener('submit', addUserCard);
+popupList.forEach(popup =>{
+  popup.addEventListener('click', evt => {
+    if(evt.target === evt.currentTarget){
+      closePopup(popup);
+    }
+  });
+  document.addEventListener('keydown', evt => {
+    if(evt.key === 'Escape'){
+      closePopup(popup);
+    }
+  });
+});
 displayCards(initialCards, cards);
+enableValidation(formSelectors);
 
 
 
