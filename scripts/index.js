@@ -22,6 +22,20 @@ const cards = document.querySelector('.cards');
 const submitEditForm = popupEditForm.querySelector('.popup__save-button');
 const submitAddCard = popupAddCard.querySelector('.popup__save-button');
 
+const clearInputErrors = (popup) => {
+  Array.from(popup.querySelectorAll('.popup__input')).forEach(input =>{
+    hideError(input, formSelectors.inputErrorClass);
+  });
+}
+const setKeyClose = (evt) => {
+  const currentPopup = popupList.find(popup => {
+    return popup.classList.contains('popup_opened');
+  });
+  if(evt.key === 'Escape'){
+    closePopup(currentPopup);
+    clearInputErrors(currentPopup);
+  }
+}
 const addDeleteCardEvent = (deleteButton) => {
   deleteButton.addEventListener('click', event => {
     event.preventDefault();
@@ -64,12 +78,11 @@ const displayCards = (array, container) => {
 }
 const openPopup = (popup) => {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', setKeyClose);
 }
 const closePopup = (popup) => {
-  Array.from(popup.querySelectorAll('.popup__input')).forEach(input =>{
-    hideError(input, formSelectors.inputErrorClass);
-  });
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', setKeyClose);
 }
 const saveProfileSettings = (event) => {
   event.preventDefault();
@@ -100,24 +113,24 @@ addButton.addEventListener('click', () => {
 });
 closeEditFormButton.addEventListener('click', () => {
   closePopup(popupEditForm);
+  clearInputErrors(popupEditForm);
 });
 closeAddCardButton.addEventListener('click', () => {
   closePopup(popupAddCard);
+  clearInputErrors(popupAddCard);
 });
 closeViewImageButton.addEventListener('click', () => {
   closePopup(popupViewImage);
 })
-formEditProfile.addEventListener('submit', saveProfileSettings);
+formEditProfile.addEventListener('submit', evt => {
+  saveProfileSettings(evt);
+});
 formAddCard.addEventListener('submit', addUserCard);
 popupList.forEach(popup =>{
   popup.addEventListener('click', evt => {
     if(evt.target === evt.currentTarget){
       closePopup(popup);
-    }
-  });
-  document.addEventListener('keydown', evt => {
-    if(evt.key === 'Escape'){
-      closePopup(popup);
+      clearInputErrors(popup);
     }
   });
 });

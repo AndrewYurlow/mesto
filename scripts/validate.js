@@ -29,14 +29,18 @@ const toggleButton = (button, buttonInactiveSelector, form) => {
   }
 }
 
+const checkInputValidity = (inputElement, inputErrorSelector) => {
+  if(inputElement.checkValidity()){
+    hideError(inputElement, inputErrorSelector);
+  }else{
+    showError(inputElement, inputErrorSelector);
+  }
+}
+
 const validateInputs = (form, inputList, inputErrorSelector, button, buttonInactiveSelector) => {
   inputList.forEach(inputElement => {
     inputElement.addEventListener('input', () => {
-      if(inputElement.checkValidity()){
-        hideError(inputElement, inputErrorSelector);
-      }else{
-        showError(inputElement, inputErrorSelector);
-      }
+      checkInputValidity(inputElement, inputErrorSelector);
       toggleButton(button, buttonInactiveSelector, form);
     });
   });
