@@ -1,9 +1,9 @@
+import {Card} from './Card.js';
+
 const popupList = Array.from(document.querySelectorAll('.popup')); 
 const popupEditForm = document.querySelector('.popup_type_edit-form');
 const popupAddCard = document.querySelector('.popup_type_add-card');
 const popupViewImage = document.querySelector('.popup_type_view-image');
-const pictureOfPopup = document.querySelector('.popup__picture');
-const descriptionOfPopup = document.querySelector('.popup__description');
 const formEditProfile = document.querySelector('.popup__container_type_edit-form');
 const formAddCard = document.querySelector('.popup__container_type_add-card');
 const editButton = document.querySelector('.profile__edit-button');
@@ -17,7 +17,6 @@ const closeAddCardButton = document.querySelector('.popup__close-button_type_add
 const closeViewImageButton = document.querySelector('.popup__close-button_type_view-image');
 const inputPlaceTitle = document.querySelector('.popup__input_type_place-title');
 const inputPlaceLink = document.querySelector('.popup__input_type_place-link');
-const cardTemplate = document.querySelector('.card-template').content;
 const cards = document.querySelector('.cards');
 const submitEditForm = popupEditForm.querySelector('.popup__save-button');
 const submitAddCard = popupAddCard.querySelector('.popup__save-button');
@@ -36,44 +35,10 @@ const setKeyClose = (evt) => {
     clearInputErrors(currentPopup);
   }
 }
-const addDeleteCardEvent = (deleteButton) => {
-  deleteButton.addEventListener('click', event => {
-    event.preventDefault();
-    deleteButton.closest('.cards__item').remove();
-  });
-}
-const addLikeCardEvent = (likeButton) => {
-  likeButton.addEventListener('click', event => {
-    event.preventDefault();
-    likeButton.classList.toggle('card__like-button_liked');
-  });
-}
-const addPopupViewImageEvent = (cardImage, cardTitle) => {
-  cardImage.addEventListener('click', () => {
-    pictureOfPopup.src = cardImage.src;
-    pictureOfPopup.alt = `Место '${cardTitle.textContent}'`;
-    descriptionOfPopup.textContent = cardTitle.textContent;
-    openPopup(popupViewImage);
-  });
-}
-const makeCard = (userCardObject) => {
-  const card = cardTemplate.cloneNode(true);
-  const cardImage = card.querySelector('.card__image');
-  const cardTitle = card.querySelector('.card__title');
-  const likeButton = card.querySelector('.card__like-button');
-  const deleteButton = card.querySelector('.card__delete');
-  cardImage.src = userCardObject.link;
-  cardImage.alt = `${userCardObject.name}`;
-  cardTitle.textContent = userCardObject.name;
-  addPopupViewImageEvent(cardImage, cardTitle);
-  addLikeCardEvent(likeButton);
-  addDeleteCardEvent(deleteButton);
-  return card;
-}
 const displayCards = (array, container) => {
   array.forEach((item) => {
-    const card = makeCard(item);
-    container.append(card);
+    const card = new Card(item, '.card-template');
+    container.append(card.generateCard());
   });
 }
 const openPopup = (popup) => {
@@ -92,11 +57,12 @@ const saveProfileSettings = (event) => {
 }
 const addUserCard = (event) => {
   event.preventDefault();
-  const userCard = {
+  const userData = {
     name: `${inputPlaceTitle.value}`,
     link: `${inputPlaceLink.value}`
   };
-  cards.prepend(makeCard(userCard));
+  const userCard = new Card(userData, '.card-template');
+  cards.prepend(userCard.generateCard());
   closePopup(popupAddCard);
 }
 editButton.addEventListener('click', () => {
