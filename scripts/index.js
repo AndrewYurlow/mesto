@@ -1,5 +1,6 @@
 import {Card} from './Card.js';
 import {formSelectors, FormValidator} from './FormValidator.js';
+import {initialCards} from './initial-cards.js';
 
 const popupList = Array.from(document.querySelectorAll('.popup')); 
 const popupEditForm = document.querySelector('.popup_type_edit-form');
