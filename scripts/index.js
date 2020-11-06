@@ -1,4 +1,5 @@
 import {Card} from './Card.js';
+import {formSelectors, FormValidator} from './FormValidator.js';
 
 const popupList = Array.from(document.querySelectorAll('.popup')); 
 const popupEditForm = document.querySelector('.popup_type_edit-form');
@@ -18,21 +19,13 @@ const closeViewImageButton = document.querySelector('.popup__close-button_type_v
 const inputPlaceTitle = document.querySelector('.popup__input_type_place-title');
 const inputPlaceLink = document.querySelector('.popup__input_type_place-link');
 const cards = document.querySelector('.cards');
-const submitEditForm = popupEditForm.querySelector('.popup__save-button');
-const submitAddCard = popupAddCard.querySelector('.popup__save-button');
 
-const clearInputErrors = (popup) => {
-  Array.from(popup.querySelectorAll('.popup__input')).forEach(input =>{
-    hideError(input, formSelectors.inputErrorClass);
-  });
-}
 const setKeyClose = (evt) => {
   const currentPopup = popupList.find(popup => {
     return popup.classList.contains('popup_opened');
   });
   if(evt.key === 'Escape'){
     closePopup(currentPopup);
-    clearInputErrors(currentPopup);
   }
 }
 const displayCards = (array, container) => {
@@ -68,22 +61,22 @@ const addUserCard = (event) => {
 editButton.addEventListener('click', () => {
   inputName.value = profileName.textContent;
   inputDescription.value = profileDecription.textContent;
-  toggleButton(submitEditForm, formSelectors.inactiveButtonClass, formEditProfile);
+  const formValidator = new FormValidator(formSelectors, formEditProfile);
+  formValidator.enableValidation();
   openPopup(popupEditForm);
 });
 addButton.addEventListener('click', () => {
   inputPlaceTitle.value = '';
   inputPlaceLink.value = '';
-  toggleButton(submitAddCard, formSelectors.inactiveButtonClass, formAddCard);
+  const formValidator = new FormValidator(formSelectors, formAddCard);
+  formValidator.enableValidation();
   openPopup(popupAddCard);
 });
 closeEditFormButton.addEventListener('click', () => {
   closePopup(popupEditForm);
-  clearInputErrors(popupEditForm);
 });
 closeAddCardButton.addEventListener('click', () => {
   closePopup(popupAddCard);
-  clearInputErrors(popupAddCard);
 });
 closeViewImageButton.addEventListener('click', () => {
   closePopup(popupViewImage);
@@ -96,12 +89,10 @@ popupList.forEach(popup =>{
   popup.addEventListener('click', evt => {
     if(evt.target === evt.currentTarget){
       closePopup(popup);
-      clearInputErrors(popup);
     }
   });
 });
 displayCards(initialCards, cards);
-enableValidation(formSelectors);
 
 
 
