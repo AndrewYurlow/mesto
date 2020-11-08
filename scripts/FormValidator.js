@@ -8,12 +8,13 @@ const formSelectors = {
 }
 
 class FormValidator{
-  constructor(selectorsObject, form){
+  constructor(form){
+    this._formSelectors = formSelectors;
     this._form = form;
-    this._submitButton = this._form.querySelector(selectorsObject.submitButtonSelector);
-    this._inputs = Array.from(this._form.querySelectorAll(selectorsObject.inputSelector));
-    this._errorSelector = selectorsObject.inputErrorClass;
-    this._inactiveButtonSelector = selectorsObject.inactiveButtonClass;
+    this._submitButton = this._form.querySelector(this._formSelectors.submitButtonSelector);
+    this._inputs = Array.from(this._form.querySelectorAll(this._formSelectors.inputSelector));
+    this._errorSelector = this._formSelectors.inputErrorClass;
+    this._inactiveButtonSelector = this._formSelectors.inactiveButtonClass;
   }
   _showError(input){
     input.classList.add(this._errorSelector);
@@ -58,4 +59,4 @@ class FormValidator{
   }
 }
 
-export {formSelectors, FormValidator};
+export {FormValidator};

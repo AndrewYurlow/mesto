@@ -1,5 +1,6 @@
+import { popupViewImage, handleViewImageClick } from './utils.js';
 export class Card{
-  constructor(data, selector){
+  constructor(data, selector, handleViewImageClick){
     this._name = data.name;
     this._link = data.link;
     this._selector = selector;
@@ -12,13 +13,6 @@ export class Card{
     event.preventDefault();
     event.target.closest('.cards__item').remove();
   }
-  _handleViewImageClick(){
-    const popupViewImage = document.querySelector('.popup_type_view-image');
-    popupViewImage.querySelector('.popup__picture').src = this._link;
-    popupViewImage.querySelector('.popup__picture').alt = `Место ${this._name}`;
-    popupViewImage.querySelector('.popup__description').textContent = this._name;
-    popupViewImage.classList.add('popup_opened');
-  }
   _setEventListeners(){
     this._templateCard.querySelector('.card__like-button').addEventListener('click', (evt) =>{
       this._handleLikeClick(evt);
@@ -27,7 +21,7 @@ export class Card{
       this._handleDeleteClick(evt);
     });
     this._templateCard.querySelector('.card__image').addEventListener('click', () =>{
-      this._handleViewImageClick();
+      handleViewImageClick(popupViewImage, this._link, this._name);
     });
   }
   _getTemplateCard(){
