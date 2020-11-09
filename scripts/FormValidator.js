@@ -1,14 +1,5 @@
-const formSelectors = {
-  formSelector: '.popup__container',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save-button',
-  inactiveButtonClass: 'popup__save-button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error'
-}
-
 class FormValidator{
-  constructor(form){
+  constructor(form, formSelectors){
     this._formSelectors = formSelectors;
     this._form = form;
     this._submitButton = this._form.querySelector(this._formSelectors.submitButtonSelector);
@@ -51,11 +42,13 @@ class FormValidator{
     });
   }
   enableValidation(){
+    this._validateInputs();
+  }
+  clearValidation(){
     this._inputs.forEach(input =>{
       this._hideError(input);
     });
     this._toggleButton(this._submitButton);
-    this._validateInputs();
   }
 }
 

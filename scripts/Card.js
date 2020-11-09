@@ -6,12 +6,13 @@ export class Card{
     this._selector = selector;
   }
   _handleLikeClick(event){
-    event.preventDefault();
+    //event.preventDefault();
     event.target.classList.toggle('card__like-button_liked');
   }
   _handleDeleteClick(event){
-    event.preventDefault();
+    //event.preventDefault();
     event.target.closest('.cards__item').remove();
+    this._templateCard = null;
   }
   _setEventListeners(){
     this._templateCard.querySelector('.card__like-button').addEventListener('click', (evt) =>{
@@ -30,8 +31,9 @@ export class Card{
   }
   generateCard(){
     this._templateCard = this._getTemplateCard();
-    this._templateCard.querySelector('.card__image').src = this._link;
-    this._templateCard.querySelector('.card__image').alt = `${this._name}`;
+    this._cardImage = this._templateCard.querySelector('.card__image');
+    this._cardImage.src = this._link;
+    this._cardImage.alt = `${this._name}`;
     this._templateCard.querySelector('.card__title').textContent = this._name;
     this._setEventListeners();
     return this._templateCard;
