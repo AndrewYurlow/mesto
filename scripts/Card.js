@@ -6,11 +6,9 @@ export class Card{
     this._selector = selector;
   }
   _handleLikeClick(event){
-    //event.preventDefault();
     event.target.classList.toggle('card__like-button_liked');
   }
   _handleDeleteClick(event){
-    //event.preventDefault();
     event.target.closest('.cards__item').remove();
     this._templateCard = null;
   }
