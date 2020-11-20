@@ -1,9 +1,9 @@
-import { popupViewImage, handleViewImageClick } from './utils.js';
-export class Card{
-  constructor(data, selector, handleViewImageClick){
-    this._name = data.name;
+export default class Card{
+  constructor(data, selector, handleCardClick){
+    this._title = data.title;
     this._link = data.link;
     this._selector = selector;
+    this._handleCardClick = handleCardClick;
   }
   _handleLikeClick(event){
     event.target.classList.toggle('card__like-button_liked');
@@ -20,7 +20,7 @@ export class Card{
       this._handleDeleteClick(evt);
     });
     this._templateCard.querySelector('.card__image').addEventListener('click', () =>{
-      handleViewImageClick(popupViewImage, this._link, this._name);
+      this._handleCardClick(this._link, this._title);
     });
   }
   _getTemplateCard(){
@@ -31,8 +31,8 @@ export class Card{
     this._templateCard = this._getTemplateCard();
     this._cardImage = this._templateCard.querySelector('.card__image');
     this._cardImage.src = this._link;
-    this._cardImage.alt = `${this._name}`;
-    this._templateCard.querySelector('.card__title').textContent = this._name;
+    this._cardImage.alt = `${this._title}`;
+    this._templateCard.querySelector('.card__title').textContent = this._title;
     this._setEventListeners();
     return this._templateCard;
   }
