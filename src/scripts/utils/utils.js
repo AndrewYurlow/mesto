@@ -1,4 +1,10 @@
 import PopupWithImage from '../components/PopupWithImage.js';
+const baikalImage = new URL('../../image/baikal.jpg', import.meta.url);
+const vladivostokImage = new URL('../../image/vladivostok.jpg', import.meta.url);
+const smolenskImage = new URL('../../image/smolensk.jpg', import.meta.url);
+const piterImage = new URL('../../image/piter.jpg', import.meta.url);
+const moskvaImage = new URL('../../image/moskva.jpg', import.meta.url);
+const kareliaImage = new URL('../../image/karelia.jpg', import.meta.url);
 
 const popupViewImage = new PopupWithImage('.popup_type_view-image');
 popupViewImage.setEventListeners();
@@ -19,27 +25,27 @@ const formSelectors = {
 const initialCards = [
   {
     title: 'Озеро Байкал',
-    link: './image/baikal.jpg'
+    link: baikalImage
   },
   {
     title: 'Владивосток',
-    link: './image/vladivostok.jpg'
+    link: vladivostokImage
   },
   {
     title: 'Смоленск',
-    link: './image/smolensk.jpg'
+    link: smolenskImage
   },
   {
     title: 'Санкт-Петербург',
-    link: './image/piter.jpg'
+    link: piterImage
   },
   {
     title: 'Москва',
-    link: './image/moskva.jpg'
+    link: moskvaImage
   },
   {
     title: 'Карелия',
-    link: './image/karelia.jpg'
+    link: kareliaImage
   }
 ];
 

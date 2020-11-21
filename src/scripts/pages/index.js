@@ -13,6 +13,7 @@ import {
 import Section from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
+import '../../styles/index.css';
 
 const userData = new UserInfo('.profile__name', '.profile__description');
 
