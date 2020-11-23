@@ -19,7 +19,7 @@ export default class Card{
     this._templateCard.querySelector('.card__delete').addEventListener('click', (evt)=>{
       this._handleDeleteClick(evt);
     });
-    this._templateCard.querySelector('.card__image').addEventListener('click', () =>{
+    this._cardImage.addEventListener('click', () =>{
       this._handleCardClick(this._link, this._title);
     });
   }
