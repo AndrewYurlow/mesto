@@ -3,9 +3,9 @@ export default class Section {
     this._items = items;
     this._renderer = renderer;
     this._selector = selector;
+    this._container = document.querySelector(this._selector);
   }
   addItem(element) {
-    this._container = document.querySelector(this._selector);
     this._container.append(element);
   }
   renderItems() {

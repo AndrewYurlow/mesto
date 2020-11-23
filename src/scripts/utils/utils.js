@@ -1,3 +1,4 @@
+import Card from '../components/Card.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 const baikalImage = new URL('../../image/baikal.jpg', import.meta.url);
 const vladivostokImage = new URL('../../image/vladivostok.jpg', import.meta.url);
@@ -49,10 +50,44 @@ const initialCards = [
   }
 ];
 
+const getFormValues = (inputs) => {
+  const formValues = {};
+  inputs.forEach(item => {
+    formValues[item.id] = item.value;
+  });
+  return formValues;
+}
+
+const createCard = (data, cardTemplate, handle) => {
+  const newCard = new Card(data, cardTemplate, handle);
+  return newCard.generateCard(); 
+}
+
 const formEditProfile = document.querySelector('.popup__container_type_edit-form');
 const formAddCard = document.querySelector('.popup__container_type_add-card');
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.add-button');
 const cards = document.querySelector('.cards');
+const cardTemplate = '.card-template';
+const profileName = '.profile__name';
+const profileDescription = '.profile__description';
+const popupEditFormSelector = '.popup_type_edit-form';
+const popupAddCardFormSelector = '.popup_type_add-card';
 
-export { formSelectors, initialCards, handleCardClick, formEditProfile, formAddCard, editButton, addButton, cards };
+export { 
+  formSelectors, 
+  initialCards, 
+  handleCardClick, 
+  formEditProfile, 
+  formAddCard, 
+  editButton, 
+  addButton, 
+  cards, 
+  getFormValues, 
+  cardTemplate, 
+  profileName, 
+  profileDescription ,
+  popupAddCardFormSelector,
+  popupEditFormSelector,
+  createCard
+};

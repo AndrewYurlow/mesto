@@ -8,36 +8,43 @@ import {
   formAddCard,
   editButton,
   addButton,
-  cards
+  cards,
+  getFormValues,
+  cardTemplate,
+  profileName,
+  profileDescription,
+  popupAddCardFormSelector,
+  popupEditFormSelector,
+  createCard
 } from '../utils/utils.js';
 import Section from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import '../../styles/index.css';
 
-const userData = new UserInfo('.profile__name', '.profile__description');
+const userData = new UserInfo(profileName, profileDescription);
 
 const cardList = new Section({ 
   items: initialCards,
   renderer: function(item) {
-    const card = new Card(item, '.card-template', handleCardClick);
-    return card.generateCard();
+    return createCard(item, cardTemplate, handleCardClick);
   }
 }, '.cards');
 
 const editFormPopup = new PopupWithForm(
-  '.popup_type_edit-form',
-  function() {
-    userData.setUserInfo(this.values['name'], this.values['description']);
+  popupEditFormSelector,
+  function(inputs) {
+    const values = getFormValues(inputs);
+    userData.setUserInfo(values['name'], values['description']);
     editFormPopup.close();
   });
 editFormPopup.setEventListeners();
 
 const addCardPopup = new PopupWithForm(
-  '.popup_type_add-card',
-  function() {
-    const userCard = new Card(this.values, '.card-template', handleCardClick);
-    cards.prepend(userCard.generateCard());
+  popupAddCardFormSelector,
+  function(inputs) {
+    const values = getFormValues(inputs);
+    cards.prepend(createCard(values, cardTemplate, handleCardClick));
     addCardPopup.close();
   });
 addCardPopup.setEventListeners();

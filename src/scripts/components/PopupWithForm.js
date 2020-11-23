@@ -7,17 +7,13 @@ export default class PopupWithForm extends Popup {
   }
   _getInputValues() {
     this._inputs = Array.from(this._popup.querySelectorAll('.popup__input'));
-    this.values = {};
-    this._inputs.forEach(item => {
-      this.values[item.id] = item.value;
-    });
+    return this._inputs;
   }
   setEventListeners() {
     super.setEventListeners();
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      this._getInputValues();
-      this._submitCallback();
+      this._submitCallback(this._getInputValues());
     });
   }
   close() {
