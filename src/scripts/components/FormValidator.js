@@ -19,10 +19,10 @@ export default class FormValidator{
   }
   _toggleButton(button){
     if(this._form.checkValidity()){
-      button.classList.remove(this._buttonInactiveSelector);
+      button.classList.remove(this._inactiveButtonSelector);
       button.removeAttribute('disabled');
     }else{
-      button.classList.add(this._buttonInactiveSelector);
+      button.classList.add(this._inactiveButtonSelector);
       button.setAttribute('disabled', true);
     }
   }

@@ -1,7 +1,9 @@
 .profile__avatar{
   width: 120px;
   height: 120px;
+  background: black;
   border-radius: 50%;
-  object-fit: cover;
-  object-position: center;
+  background-image: url('../../../image/editAvatar.png');
+  background-repeat: no-repeat no-repeat;
+  background-position: center;
 }
