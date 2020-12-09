@@ -1,15 +1,17 @@
 export default class Card{
-  constructor(data, selector, handleCardClick, handleDeleteCard, userId, api){
+  constructor(data, selector, handleCardClick, handleDeleteClick, userId, like, removeLike, deleteCard){
     this._title = data.name;
     this._link = data.link;
     this._likes = data.likes;
     this._selector = selector;
     this._handleCardClick = handleCardClick;
-    this._handleDeleteCard = handleDeleteCard;
+    this._handleDeleteClick = handleDeleteClick;
     this._userId = userId;
     this._cardOwner = data.owner._id;
     this._cardId = data._id;
-    this._api = api;
+    this._like = like;
+    this._removeLike = removeLike;
+    this._deleteCard = deleteCard;
   }
   _toggleDeleteButton() {
     if (this._userId !== this._cardOwner) {
@@ -30,20 +32,9 @@ export default class Card{
     this._likeButton = event.target;
     this._likeCounter = this._likeButton.closest('.card').querySelector('.card__like-counter');
     if (!this._likeButton.classList.contains('card__like-button_liked')) {
-      this._api.like(this._cardId)
-      .then(data => {
-        console.log(this._likes);
-        this._likeCounter.textContent = data.likes.length;
-      })
-      .catch(err => console.log(err));
-      this._likeButton.classList.add('card__like-button_liked');
+      this._like(this._cardId, this._likeCounter, this._likeButton);
     } else {
-      this._api.removeLike(this._cardId)
-      .then(data => {
-        this._likeCounter.textContent = data.likes.length;
-      })
-      .catch(err => console.log(err));;
-      this._likeButton.classList.remove('card__like-button_liked');
+      this._removeLike(this._cardId, this._likeCounter, this._likeButton);
     }
   }
   _setEventListeners(){
@@ -51,7 +42,7 @@ export default class Card{
       this._handleLikeClick(evt);
     });
     this._templateCard.querySelector('.card__delete').addEventListener('click', (evt)=>{
-      this._handleDeleteCard(evt, this._cardId, this._api);
+      this._handleDeleteClick(evt, this._cardId, this._deleteCard);
     });
     this._cardImage.addEventListener('click', () =>{
       this._handleCardClick(this._link, this._title);
@@ -63,13 +54,14 @@ export default class Card{
   }
   generateCard(){
     this._templateCard = this._getTemplateCard();
+    this._likeCounter = this._templateCard.querySelector('.card__like-counter');
     this._toggleDeleteButton();
     this._toggleLikeButton();
     this._cardImage = this._templateCard.querySelector('.card__image');
     this._cardImage.src = this._link;
     this._cardImage.alt = `${this._title}`;
     this._templateCard.querySelector('.card__title').textContent = this._title;
-    this._templateCard.querySelector('.card__like-counter').textContent = this._likes.length;
+    this._likeCounter.textContent = this._likes.length;
     this._setEventListeners();
     return this._templateCard;
   }

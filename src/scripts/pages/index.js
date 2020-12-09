@@ -2,12 +2,11 @@ import FormValidator from '../components/FormValidator.js';
 import {  
   formSelectors,
   handleCardClick,
-  handleDeleteCard,
+  handleDeleteClick,
   formEditProfile,
   formAddCard,
   editButton,
   addButton,
-  cards,
   getFormValues,
   cardTemplate,
   popupAddCardFormSelector,
@@ -22,7 +21,10 @@ import {
   avatarEditButton,
   popupEditAvatarFormSelector,
   formEditAvatar,
-  loadingData
+  loadingData,
+  inputName,
+  inputDescription,
+  profileAvatarSelector
 } from '../utils/utils.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
@@ -40,28 +42,51 @@ const api = new Api({
     }
 });
 
-api.getUserInfo()
-.then(data => {
-  name.textContent = data.name;
-  description.textContent = data.about;
-  avatarImage.src = data.avatar;
-  userId = data._id;
-})
-.catch(err => console.log(err));
+const like = (id, likeCounter, likeButton) => {
+  api.like(id)
+  .then(data => {
+    likeCounter.textContent = data.likes.length;
+    likeButton.classList.add('card__like-button_liked');
+  })
+  .catch(err => console.log(err));
+}
 
-api.getInitialCards()
+const removeLike = (id, likeCounter, likeButton) => {
+  api.removeLike(id)
+  .then(data => {
+    likeCounter.textContent = data.likes.length;
+    likeButton.classList.remove('card__like-button_liked');
+  })
+  .catch(err => console.log(err));
+}
+
+const deleteCard = (id) => {
+  api.deleteCard(id)
+  .catch(err => console.log(err));
+}
+
+const userInfoPromise = api.getUserInfo();
+const initialCardPromise = api.getInitialCards();
+Promise.all([ userInfoPromise, initialCardPromise ])
 .then(data => {
+  const [ userData, cards ] = data;
+  
+  name.textContent = userData.name;
+  description.textContent = userData.about;
+  avatarImage.src = userData.avatar;
+  userId = userData._id;
+
   const cardList = new Section({ 
-    items: data,
+    items: cards,
     renderer: function(item) {
-      return createCard(item, cardTemplate, handleCardClick, handleDeleteCard, userId, api);
+      return createCard(item, cardTemplate, handleCardClick, handleDeleteClick, userId, like, removeLike, deleteCard);
     }
   }, cardsSelector);
   cardList.renderItems();
 })
 .catch(err => console.log(err));
 
-const userData = new UserInfo(profileNameSelector, profileDescriptionSelector);
+const userData = new UserInfo(profileNameSelector, profileDescriptionSelector, profileAvatarSelector);
 
 const editFormPopup = new PopupWithForm(
   popupEditFormSelector,
@@ -70,9 +95,9 @@ const editFormPopup = new PopupWithForm(
     api.editProfileInfo(values)
     .then(data => {
       userData.setUserInfo(data.name, data.about);
+      editFormPopup.close();
     })
     .catch(err => console.log(err));
-    editFormPopup.close();
   },
   loadingData);
 editFormPopup.setEventListeners();
@@ -83,10 +108,16 @@ const addCardPopup = new PopupWithForm(
     const values = getFormValues(inputs);
     api.addNewCard(values)
     .then(data => {
-      cards.prepend(createCard(data, cardTemplate, handleCardClick, handleDeleteCard, userId, api));
+      const newCard = new Section({
+        items: data,
+        renderer: function(item) {
+          return createCard(item, cardTemplate, handleCardClick, handleDeleteClick, userId, like, removeLike, deleteCard);
+        }
+       }, cardsSelector);
+      newCard.renderNewItem();
+      addCardPopup.close();
     })
     .catch(err => console.log(err));
-    addCardPopup.close();
   },
   loadingData);
 addCardPopup.setEventListeners();
@@ -97,19 +128,18 @@ const editAvatarPopup = new PopupWithForm(
     const value = getFormValues(inputs);
     api.editAvatar(value)
     .then(data => {
-      console.log(data);
-      avatarImage.src = data.avatar;
+      userData.setUserAvatar(data.avatar);
+      editAvatarPopup.close();
     })
     .catch(err => console.log(err));
-    editAvatarPopup.close();
   },
   loadingData);
 editAvatarPopup.setEventListeners();
 
 editButton.addEventListener('click', () => {
   const data = userData.getUserInfo();
-  formEditProfile.querySelector('#name').value = data['name'];
-  formEditProfile.querySelector('#description').value = data['description'];
+  inputName.value = data['name'];
+  inputDescription.value = data['description'];
   formEditProfileValidator.clearValidation();
   editFormPopup.open();
 });

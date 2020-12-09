@@ -1,8 +1,5 @@
 import Card from '../components/Card.js';
-<<<<<<< HEAD
-=======
 import PopupDeleteCard from '../components/PopupDeleteCard.js';
->>>>>>> master
 import PopupWithImage from '../components/PopupWithImage.js';
 
 const popupViewImage = new PopupWithImage('.popup_type_view-image');
@@ -11,11 +8,11 @@ popupViewImage.setEventListeners();
 const popupDeleteCard = new PopupDeleteCard('.popup_type_delete-card');
 popupDeleteCard.setEventListeners();
 
-const loadingData = (status, button, defaultText) => {
+const loadingData = (status, button) => {
   if (status) {
     button.textContent = 'Сохранение...';
   } else {
-    button.textContent = defaultText;
+    button.textContent = 'Сохранить';
   }
 }
 
@@ -23,9 +20,9 @@ const handleCardClick = (link,name) => {
   popupViewImage.open(link,name);
 }
 
-const handleDeleteCard = (evt, id, api) => {
+const handleDeleteClick = (evt, id, deleteCard) => {
   popupDeleteCard.open();
-  popupDeleteCard.delete(evt, id, api);
+  popupDeleteCard.confirmDelete(evt, id, deleteCard);
 }
 
 const formSelectors = {
@@ -45,43 +42,20 @@ const getFormValues = (inputs) => {
   return formValues;
 }
 
-const createCard = (data, cardTemplate, handle, handleDelete, userId, api) => {
-  const newCard = new Card(data, cardTemplate, handle, handleDelete, userId, api);
-  return newCard.generateCard(); 
-}
-
-const getFormValues = (inputs) => {
-  const formValues = {};
-  inputs.forEach(item => {
-    formValues[item.id] = item.value;
-  });
-  return formValues;
-}
-
-const createCard = (data, cardTemplate, handle) => {
-  const newCard = new Card(data, cardTemplate, handle);
+const createCard = (data, cardTemplate, handleCardClick, handleDeleteClick, userId, like, removeLike, deleteCard) => {
+  const newCard = new Card(data, cardTemplate, handleCardClick, handleDeleteClick, userId, like, removeLike, deleteCard);
   return newCard.generateCard(); 
 }
 
 const formEditProfile = document.querySelector('.popup__container_type_edit-form');
 const formAddCard = document.querySelector('.popup__container_type_add-card');
 const formEditAvatar = document.querySelector('.popup__container_type_edit-avatar');
+const inputName = formEditProfile.querySelector('.popup__input_type_name');
+const inputDescription = formEditProfile.querySelector('.popup__input_type_description');
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.add-button');
 const avatarEditButton = document.querySelector('.profile__avatar');
-const cards = document.querySelector('.cards');
 const cardTemplate = '.card-template';
-<<<<<<< HEAD
-const profileName = '.profile__name';
-const profileDescription = '.profile__description';
-const popupEditFormSelector = '.popup_type_edit-form';
-const popupAddCardFormSelector = '.popup_type_add-card';
-
-export { 
-  formSelectors, 
-  initialCards, 
-  handleCardClick, 
-=======
 const popupEditFormSelector = '.popup_type_edit-form';
 const popupAddCardFormSelector = '.popup_type_add-card';
 const popupEditAvatarFormSelector = '.popup_type_edit-avatar';
@@ -96,22 +70,13 @@ const avatarImage = document.querySelector(profileAvatarSelector);
 export { 
   formSelectors,  
   handleCardClick,
-  handleDeleteCard, 
->>>>>>> master
+  handleDeleteClick, 
   formEditProfile, 
   formAddCard, 
   editButton, 
-  addButton, 
-  cards, 
+  addButton,
   getFormValues, 
   cardTemplate, 
-<<<<<<< HEAD
-  profileName, 
-  profileDescription ,
-  popupAddCardFormSelector,
-  popupEditFormSelector,
-  createCard
-=======
   popupAddCardFormSelector,
   popupEditFormSelector,
   createCard,
@@ -125,6 +90,7 @@ export {
   avatarEditButton,
   popupEditAvatarFormSelector,
   formEditAvatar,
-  loadingData
->>>>>>> master
+  loadingData,
+  inputName,
+  inputDescription
 };

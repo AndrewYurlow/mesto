@@ -4,11 +4,11 @@ export default class PopupDeleteCard extends Popup {
     super(selector);
     this._form = this._popup.querySelector('.popup__container');
   }
-  delete(eventDeleteClick, id, api) {
+  confirmDelete(eventDeleteClick, id, deleteCard) {
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
       eventDeleteClick.target.closest('.cards__item').remove();
-      api.deleteCard(id).catch(err => console.log(err));
+      deleteCard(id);
       this.close();
     });
     
