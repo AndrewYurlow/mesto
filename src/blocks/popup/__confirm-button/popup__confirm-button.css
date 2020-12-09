@@ -1,4 +1,4 @@
-.popup__save-button{
+.popup__confirm-button{
   padding: 0;
   cursor: pointer;
   margin-top: 18px;
@@ -15,21 +15,15 @@
   text-align: center;
   font-weight: 400;
 }
-.popup__save-button:hover{
+.popup__confirm-button:hover{
   background-color: rgba(0, 0, 0, 0.8);
 }
 @media screen and (max-width: 768px){
-  .popup__save-button{
+  .popup__confirm-button{
     width: 238px;
     margin-top: 15px;
     margin-bottom: 25px;
     font-size: 14px;
     line-height: 17px;
   }
-}
-.popup__save-button:disabled{
-  background-color: rgba(255, 255, 255, 1);
-  color: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(0, 0, 0, 0.6);
-  cursor: default;
 }
