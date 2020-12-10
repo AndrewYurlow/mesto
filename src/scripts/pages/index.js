@@ -65,10 +65,10 @@ const popupDeleteCard = new PopupDeleteCard(
   popupDeleleteCardSelector,
   function(id, evt) {
     api.deleteCard(id)
-    .then(
-      evt.target.closest('.cards__item').remove(),
-      popupDeleteCard.close()
-    )
+    .then(() => {
+      evt.target.closest('.cards__item').remove();
+      popupDeleteCard.close();
+      })
     .catch(err => console.log(err));
   }
 );
