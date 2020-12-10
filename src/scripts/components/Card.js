@@ -1,5 +1,5 @@
 export default class Card{
-  constructor(data, selector, handleCardClick, handleDeleteClick, userId, like, removeLike, deleteCard){
+  constructor(data, selector, handleCardClick, handleDeleteClick, userId, like, removeLike){
     this._title = data.name;
     this._link = data.link;
     this._likes = data.likes;
@@ -11,7 +11,6 @@ export default class Card{
     this._cardId = data._id;
     this._like = like;
     this._removeLike = removeLike;
-    this._deleteCard = deleteCard;
   }
   _toggleDeleteButton() {
     if (this._userId !== this._cardOwner) {
@@ -42,7 +41,7 @@ export default class Card{
       this._handleLikeClick(evt);
     });
     this._templateCard.querySelector('.card__delete').addEventListener('click', (evt)=>{
-      this._handleDeleteClick(evt, this._cardId, this._deleteCard);
+      this._handleDeleteClick(this._cardId, evt);
     });
     this._cardImage.addEventListener('click', () =>{
       this._handleCardClick(this._link, this._title);

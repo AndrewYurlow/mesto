@@ -2,7 +2,6 @@ import FormValidator from '../components/FormValidator.js';
 import {  
   formSelectors,
   handleCardClick,
-  handleDeleteClick,
   formEditProfile,
   formAddCard,
   editButton,
@@ -11,6 +10,7 @@ import {
   cardTemplate,
   popupAddCardFormSelector,
   popupEditFormSelector,
+  popupDeleleteCardSelector,
   createCard,
   profileNameSelector,
   profileDescriptionSelector,
@@ -27,6 +27,7 @@ import {
   profileAvatarSelector
 } from '../utils/utils.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupDeleteCard from '../components/PopupDeleteCard.js';
 import UserInfo from '../components/UserInfo.js';
 import '../../styles/index.css';
 import Api from '../components/Api.js';
@@ -60,9 +61,22 @@ const removeLike = (id, likeCounter, likeButton) => {
   .catch(err => console.log(err));
 }
 
-const deleteCard = (id) => {
-  api.deleteCard(id)
-  .catch(err => console.log(err));
+const popupDeleteCard = new PopupDeleteCard(
+  popupDeleleteCardSelector,
+  function(id, evt) {
+    api.deleteCard(id)
+    .then(
+      evt.target.closest('.cards__item').remove(),
+      popupDeleteCard.close()
+    )
+    .catch(err => console.log(err));
+  }
+);
+popupDeleteCard.setEventListeners();
+
+const handleDeleteClick = (id, evt) => {
+  popupDeleteCard.open();
+  popupDeleteCard.getCardData(id, evt);
 }
 
 const userInfoPromise = api.getUserInfo();
@@ -79,7 +93,7 @@ Promise.all([ userInfoPromise, initialCardPromise ])
   const cardList = new Section({ 
     items: cards,
     renderer: function(item) {
-      return createCard(item, cardTemplate, handleCardClick, handleDeleteClick, userId, like, removeLike, deleteCard);
+      return createCard(item, cardTemplate, handleCardClick, handleDeleteClick, userId, like, removeLike);
     }
   }, cardsSelector);
   cardList.renderItems();
@@ -111,7 +125,7 @@ const addCardPopup = new PopupWithForm(
       const newCard = new Section({
         items: data,
         renderer: function(item) {
-          return createCard(item, cardTemplate, handleCardClick, handleDeleteClick, userId, like, removeLike, deleteCard);
+          return createCard(item, cardTemplate, handleCardClick, handleDeleteClick, userId, like, removeLike);
         }
        }, cardsSelector);
       newCard.renderNewItem();

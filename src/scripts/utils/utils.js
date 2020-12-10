@@ -1,12 +1,8 @@
 import Card from '../components/Card.js';
-import PopupDeleteCard from '../components/PopupDeleteCard.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 
 const popupViewImage = new PopupWithImage('.popup_type_view-image');
 popupViewImage.setEventListeners();
-
-const popupDeleteCard = new PopupDeleteCard('.popup_type_delete-card');
-popupDeleteCard.setEventListeners();
 
 const loadingData = (status, button) => {
   if (status) {
@@ -18,11 +14,6 @@ const loadingData = (status, button) => {
 
 const handleCardClick = (link,name) => {
   popupViewImage.open(link,name);
-}
-
-const handleDeleteClick = (evt, id, deleteCard) => {
-  popupDeleteCard.open();
-  popupDeleteCard.confirmDelete(evt, id, deleteCard);
 }
 
 const formSelectors = {
@@ -42,8 +33,8 @@ const getFormValues = (inputs) => {
   return formValues;
 }
 
-const createCard = (data, cardTemplate, handleCardClick, handleDeleteClick, userId, like, removeLike, deleteCard) => {
-  const newCard = new Card(data, cardTemplate, handleCardClick, handleDeleteClick, userId, like, removeLike, deleteCard);
+const createCard = (data, cardTemplate, handleCardClick, handleDeleteClick, userId, like, removeLike) => {
+  const newCard = new Card(data, cardTemplate, handleCardClick, handleDeleteClick, userId, like, removeLike);
   return newCard.generateCard(); 
 }
 
@@ -59,6 +50,7 @@ const cardTemplate = '.card-template';
 const popupEditFormSelector = '.popup_type_edit-form';
 const popupAddCardFormSelector = '.popup_type_add-card';
 const popupEditAvatarFormSelector = '.popup_type_edit-avatar';
+const popupDeleleteCardSelector = '.popup_type_delete-card';
 const cardsSelector = '.cards';
 const profileNameSelector = '.profile__name';
 const profileDescriptionSelector = '.profile__description';
@@ -69,8 +61,7 @@ const avatarImage = document.querySelector(profileAvatarSelector);
 
 export { 
   formSelectors,  
-  handleCardClick,
-  handleDeleteClick, 
+  handleCardClick, 
   formEditProfile, 
   formAddCard, 
   editButton, 
@@ -79,6 +70,7 @@ export {
   cardTemplate, 
   popupAddCardFormSelector,
   popupEditFormSelector,
+  popupDeleleteCardSelector,
   createCard,
   cardsSelector,
   profileNameSelector,
